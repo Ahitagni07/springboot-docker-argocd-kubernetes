@@ -1,0 +1,38 @@
+install floci -- iwr https://floci.io/install.ps1 | iex
+floci version -- floci --version
+							
+start aws emulator -- floci start
+Check status -- floci status
+
+install aws cli
+
+sets those below environment variables in your current terminal session.
+
+$env:AWS_ENDPOINT_URL="http://localhost.floci.io:4566"
+$env:AWS_ACCESS_KEY_ID="test"
+$env:AWS_SECRET_ACCESS_KEY="test"
+$env:AWS_DEFAULT_REGION="us-east-1"
+
+aws eks create-cluster --name dev-cluster --role-arn arn:aws:iam::000000000000:role/eks-role --resources-vpc-config subnetIds=subnet-00000001
+
+aws eks update-kubeconfig --name dev-cluster
+
+create argo cd namespace -- kubectl create namespace argocd
+
+Install -- kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+check  -- kubectl get pods -n argocd
+
+wait untill all are running
+
+Expose locally -- kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+Get password: -- $pwd = kubectl get secret argocd-initial-admin-secret `
+					-n argocd `
+					-o jsonpath="{.data.password}"
+
+					[Text.Encoding]::UTF8.GetString(
+						[Convert]::FromBase64String($pwd)
+					)
+					
+use admin username and this password to login to localhost:8080 argo UI
