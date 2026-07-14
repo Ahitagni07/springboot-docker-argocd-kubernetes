@@ -43,10 +43,10 @@ jobs:
     - name: Build Docker image
       run: |
         docker build \
-        -t ghcr.io/Ahitagni07/account-demo:${{ github.sha }} .
+        -t ghcr.io/ahitagni07/account-demo:${{ github.sha }} .
 
 
     - name: Push image
       run: |
         docker push \
-        ghcr.io/Ahitagni07/account-demo:${{ github.sha }}
+        ghcr.io/ahitagni07/account-demo:${{ github.sha }}
